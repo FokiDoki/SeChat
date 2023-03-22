@@ -1,0 +1,731 @@
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>SeChat</title>
+</head>
+<body>
+<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="utf-8">
+
+    <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>SeChat app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/content/hybrid-crypto.min.js">
+
+    </script>
+<style>
+    .scrollbar {
+        margin-left: 30px;
+        float: left;
+        height: 300px;
+        width: 65px;
+        background: #fff;
+        overflow-y: scroll;
+        margin-bottom: 25px;
+    }
+
+    .scrollbar-primary::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-primary::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #4285F4;
+    }
+
+    .scrollbar-primary {
+        scrollbar-color: #4285F4 #F5F5F5;
+    }
+
+    .scrollbar-danger::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .scrollbar-danger::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-danger::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #ff3547;
+    }
+
+    .scrollbar-danger {
+        scrollbar-color: #ff3547 #F5F5F5;
+    }
+
+    .scrollbar-warning::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .scrollbar-warning::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-warning::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #FF8800;
+    }
+
+    .scrollbar-warning {
+        scrollbar-color: #FF8800 #F5F5F5;
+    }
+
+    .scrollbar-success::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .scrollbar-success::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-success::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #00C851;
+    }
+
+    .scrollbar-success {
+        scrollbar-color: #00C851 #F5F5F5;
+    }
+
+    .scrollbar-info::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .scrollbar-info::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-info::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #33b5e5;
+    }
+
+    .scrollbar-info {
+        scrollbar-color: #33b5e5 #F5F5F5;
+    }
+
+    .scrollbar-default::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .scrollbar-default::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-default::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #2BBBAD;
+    }
+
+    .scrollbar-default {
+        scrollbar-color: #2BBBAD #F5F5F5;
+    }
+
+    .scrollbar-secondary::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
+        border-radius: 10px;
+    }
+
+    .scrollbar-secondary::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollbar-secondary::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #aa66cc;
+    }
+
+    .scrollbar-secondary {
+        scrollbar-color: #aa66cc #F5F5F5;
+    }
+</style>
+</head>
+<body>
+<input type="hidden" id="csrf" th:name="${_csrf.headerName}" th:value="${_csrf.token}" />
+<input type="hidden" id="lastMessagesUpdate" value="0" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="container scrollbar-primary">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                <div id="plist" class="people-list">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input
+                                oninput="updateUsersBlock()" id = "usersSearch"
+                                type="text" class="form-control" placeholder="Search...">
+                    </div>
+                    <input id="currentUser" value="" hidden>
+                    <div class="people-list" style="top:60px; padding-top:0" >
+                        <li id="user-template" style="display: none;" class="clearfix userselect" onclick="$('li').deactivateActive(); $(this).toggleClass('active');switchToUser(this);">
+                            <img src="https://eu.ui-avatars.com/api/?size=250&name=" class="avatar" alt="avatar">
+                            <div class="about">
+                                <div class="name"></div>
+                                <div class="status"> <i class="fa statusCircle fa-circle offline"></i><span class="lastSeen">left 7 mins ago</span></div>
+                            </div>
+                        </li>
+                        <ul id="users-list" class="list-unstyled chat-list mt-2 mb-0" style="height: 525px; overflow-y:auto">
+
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="chat">
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <img th:src="'https://eu.ui-avatars.com/api/?size=250&name='+${user?.username}" alt="avatar">
+                                </a>
+                                <div class="chat-about">
+                                    <h6 class="m-b-0 pr-2" id="currentUsername" th:text="${user?.username}"></h6>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 hidden-sm text-right">
+                                <form th:action="@{/logout}" method="post">
+                                    <span style="padding-right: 10px" id="myUsername" sec:authentication="name">thymeleaf</span>
+                                    <button class="btn btn-outline-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                                    <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                                    <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                                </svg></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-history" style="height:450px; overflow-y: auto;">
+                        <ul class="m-b-0" id="messages">
+                            <li class="clearfix" id="message-template_right" style="display:none">
+                                <div class="message-data text-right">
+                                    <span class="message-data-time messageDatetime">23:23 03 nov</span>
+                                </div>
+                                <div class="messageContent message other-message float-right mw-100"> My message </div>
+                            </li>
+                            <li class="clearfix" id="message-template_left" style="display:none">
+                                <div class="message-data">
+                                    <span class="message-data-time messageDatetime">23:24 03 nov</span>
+                                </div>
+                                <div class="messageContent message my-message mw-100">From message</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" onclick="sendMessage()"><i class="fa fa-send"></i></span>
+                            </div>
+                            <input type="text" id="message" class="form-control" autocomplete="off" placeholder="Enter text here...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    body{
+        background-color: #f4f7f6;
+        margin-top:20px;
+    }
+    .card {
+        background: #fff;
+        transition: .5s;
+        border: 0;
+        margin-bottom: 30px;
+        border-radius: .55rem;
+        position: relative;
+        width: 100%;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    }
+    .chat-app .people-list {
+        width: 280px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 20px;
+        z-index: 7
+    }
+
+    .chat-app .chat {
+        margin-left: 280px;
+        border-left: 1px solid #eaeaea
+    }
+
+    .people-list {
+        -moz-transition: .5s;
+        -o-transition: .5s;
+        -webkit-transition: .5s;
+        transition: .5s
+    }
+
+    .people-list .chat-list li {
+        padding: 10px 15px;
+        list-style: none;
+        border-radius: 3px
+    }
+
+    .people-list .chat-list li:hover {
+        background: #efefef;
+        cursor: pointer
+    }
+
+    .people-list .chat-list li.active {
+        background: #efefef
+    }
+
+    .people-list .chat-list li .name {
+        font-size: 15px
+    }
+
+    .people-list .chat-list img {
+        width: 45px;
+        border-radius: 50%
+    }
+
+    .people-list img {
+        float: left;
+        border-radius: 50%
+    }
+
+    .people-list .about {
+        float: left;
+        padding-left: 8px
+    }
+
+    .people-list .status {
+        color: #999;
+        font-size: 13px
+    }
+
+    .chat .chat-header {
+        padding: 15px 20px;
+        border-bottom: 2px solid #f4f7f6
+    }
+
+    .chat .chat-header img {
+        float: left;
+        border-radius: 40px;
+        width: 40px
+    }
+
+    .chat .chat-header .chat-about {
+        float: left;
+        padding-left: 10px
+    }
+
+    .chat .chat-history {
+        padding: 20px;
+        border-bottom: 2px solid #fff
+    }
+
+    .chat .chat-history ul {
+        padding: 0
+    }
+
+    .chat .chat-history ul li {
+        list-style: none;
+        margin-bottom: 30px
+    }
+
+    .chat .chat-history ul li:last-child {
+        margin-bottom: 0px
+    }
+
+    .chat .chat-history .message-data {
+        margin-bottom: 15px
+    }
+
+    .chat .chat-history .message-data img {
+        border-radius: 40px;
+        width: 40px
+    }
+
+    .chat .chat-history .message-data-time {
+        color: #434651;
+        padding-left: 6px
+    }
+
+    .chat .chat-history .message {
+        color: #444;
+        padding: 18px 20px;
+        line-height: 26px;
+        font-size: 16px;
+        border-radius: 7px;
+        display: inline-block;
+        position: relative
+    }
+
+    .chat .chat-history .message:after {
+        bottom: 100%;
+        left: 7%;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: #fff;
+        border-width: 10px;
+        margin-left: -10px
+    }
+
+    .chat .chat-history .my-message {
+        background: #efefef
+    }
+
+    .chat .chat-history .my-message:after {
+        bottom: 100%;
+        left: 30px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: #efefef;
+        border-width: 10px;
+        margin-left: -10px
+    }
+
+    .chat .chat-history .other-message {
+        background: #e8f1f3;
+        text-align: right
+    }
+
+    .chat .chat-history .other-message:after {
+        border-bottom-color: #e8f1f3;
+        left: 93%
+    }
+
+    .chat .chat-message {
+        padding: 20px
+    }
+
+    .online,
+    .offline,
+    .me {
+        margin-right: 2px;
+        font-size: 8px;
+        vertical-align: middle
+    }
+
+    .online {
+        color: #86c541
+    }
+
+    .offline {
+        color: #e47297
+    }
+
+    .me {
+        color: #1d8ecd
+    }
+
+    .float-right {
+        float: right
+    }
+
+    .clearfix:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0
+    }
+
+    @media only screen and (max-width: 767px) {
+        .chat-app .people-list {
+            height: 465px;
+            width: 100%;
+            overflow-x: auto;
+            background: #fff;
+            left: -400px;
+            display: none
+        }
+        .chat-app .people-list.open {
+            left: 0
+        }
+        .chat-app .chat {
+            margin: 0
+        }
+        .chat-app .chat .chat-header {
+            border-radius: 0.55rem 0.55rem 0 0
+        }
+        .chat-app .chat-history {
+            height: 300px;
+            overflow-x: auto
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 992px) {
+        .chat-app .chat-list {
+            height: 650px;
+            overflow-x: auto
+        }
+        .chat-app .chat-history {
+            height: 600px;
+            overflow-x: auto
+        }
+    }
+
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+        .chat-app .chat-list {
+            height: 480px;
+            overflow-x: auto
+        }
+        .chat-app .chat-history {
+            height: calc(100vh - 350px);
+            overflow-x: auto
+        }
+    }
+</style>
+
+<script type="text/javascript">
+
+</script>
+<script>
+    var chattingWithUsername = document.getElementById("currentUsername").textContent;
+    var myUsername = document.getElementById("myUsername").textContent;
+    jQuery.fn.deactivateActive = function() {
+        return this.each(function() {
+            var li = $(this);
+            li.removeClass("active");
+        });
+    }
+    // Get the input field
+    var input = document.getElementById("message");
+
+    // Execute a function when the user presses a key on the keyboard
+    input.addEventListener("keypress", function(event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+           sendMessage();
+        }
+    });
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    function getLastSeen(time){
+        let timeDifference = Date.now()-time;
+
+        if (timeDifference<60000){
+            return "online";
+        } else if (timeDifference<60*60*1000){
+            return Math.floor(timeDifference/1000/60)+" minutes ago";
+        } else if (timeDifference<24*60*60*1000){
+            return Math.floor(timeDifference/1000/60/60)+" hours ago";
+        } else if (timeDifference<999*60*60*1000){
+            return Math.floor(timeDifference/1000/60/60/24)+" days ago";
+        } else {
+            return "many days ago";
+        }
+    }
+    function getMessages(){
+        let lastMessagesUpdate = document.getElementById("lastMessagesUpdate");
+        $.ajax({
+            type: "GET",
+            beforeSend: function(request) {
+                request.setRequestHeader("X-CSRF-TOKEN", document.getElementById("csrf").getAttribute("value"));
+            },
+            url: "/message/getFrom",
+            data: "withUsername="+chattingWithUsername+"&timeShift="+lastMessagesUpdate.value,
+            success: function(data){
+                let messagesDOM = document.getElementById("messages");
+                console.debug(data);
+                data.forEach(message =>{
+                    let messageDOM;
+                    if (message.fromUsername===myUsername){
+                        messageDOM = document.getElementById("message-template_right").cloneNode(true);
+                        message.message = DecryptMessage(message.message, getCookie("MyPvtKey"));
+                    } else {
+                        messageDOM = document.getElementById("message-template_left").cloneNode(true);
+                        message.message = DecryptMessage(message.message, getCookie("PvtKey"));
+                    }
+
+
+                    messageDOM.getElementsByClassName("messageContent")[0].textContent = message.message;
+                    let date = new Date(message.timestamp);
+                    lastMessagesUpdate.value = message.timestamp+1;
+                    messageDOM.getElementsByClassName("messageDatetime")[0].textContent = date.toLocaleTimeString();
+                    messagesDOM.append(messageDOM);
+                    messageDOM.style.display = "";
+                    var objDiv = document.getElementsByClassName("chat-history")[0];
+                    objDiv.scrollTop = objDiv.scrollHeight;
+
+                })
+            },
+            complete : function(){
+
+                setTimeout(getMessages, 200);
+            }
+
+        });
+
+    }
+    setTimeout(getMessages, 200);
+    function sendMessage(){
+        let currentMessage = document.getElementById("message");
+
+        if (currentMessage.value.trim()==""){
+            return false;
+        }
+        currentMessage.setAttribute("disabled", "1");
+        //$.post( "/message/send", { message: currentMessage.text, toUsername: currentUser.textContent } );
+        $.ajax({
+            type: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader("X-CSRF-TOKEN", document.getElementById("csrf").getAttribute("value"));
+            },
+            url: "/message/send",
+            data: { message: EncryptMessage(currentMessage.value), toUsername: chattingWithUsername },
+            success: function(){
+                currentMessage.value = "";
+                currentMessage.removeAttribute("disabled");
+                currentMessage.focus();
+            }
+        });
+    }
+    function switchToUser(user){
+        let name = user.getElementsByClassName("name")[0].textContent;
+        let chattingWith = document.getElementById("currentUser");
+        if (name!=undefined){
+            if (chattingWith.value!=name){
+                window.location.href = "/chat?user="+name;
+            }
+        }
+        chattingWith.value = name;
+    }
+    function updateUsersBlock() {
+        let searchRequest = document.getElementById("usersSearch").value;
+        if (searchRequest===""){
+            searchRequest = ".";
+        }
+        $.ajax({
+            type: "GET",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-CSRF-TOKEN", document.getElementById("csrf").getAttribute("value"));
+            },
+            url: "/users/findManyByUsername",
+            data: {search: searchRequest},
+            success: function (data) {
+                let usersDOM = document.getElementById("users-list");
+                usersDOM.innerHTML = "";
+                data.forEach(user => {
+                    let userDOM = document.getElementById("user-template").cloneNode(true   );
+                    if (myUsername!==user.username) {
+                        userDOM.getElementsByClassName("name")[0].textContent = user.username;
+                        userDOM.getElementsByClassName("avatar")[0].setAttribute("src",
+                            userDOM.getElementsByClassName("avatar")[0].getAttribute("src")+user.username);
+                        let lastSeen = getLastSeen(user.lastSeen);
+                        userDOM.getElementsByClassName("lastSeen")[0].textContent = lastSeen;
+                        if (lastSeen==="online"){
+                            userDOM.getElementsByClassName("statusCircle")[0].classList.replace("offline","online");
+                        }
+
+                        usersDOM.append(userDOM);
+                        userDOM.style.display = "";
+                    }
+
+
+                });
+            }
+        });
+    }
+    updateUsersBlock();
+</script>
+<script>
+    function DecryptMessage(encrypted, pvtKey) {
+        var entropy = 'Testing of RSA algorithm in javascript.';
+        var crypt = new Crypt({
+            rsaStandard: 'RSA-OAEP',
+            entropy: entropy
+        });
+        var rsa = new RSA({
+            entropy: entropy
+        });
+        let privateKey = "-----BEGIN RSA PRIVATE KEY-----\n"+pvtKey+"\n-----END RSA PRIVATE KEY-----";
+        let decrypted = crypt.decrypt(privateKey, encrypted);
+        return decrypted['message'];
+    }
+
+    function EncryptMessage(message) {
+
+        let entropy = 'Testing of RSA algorithm in javascript.';
+        let crypt = new Crypt({
+            rsaStandard: 'RSA-OAEP',
+            entropy: entropy
+        });
+        let rsa = new RSA({
+            entropy: entropy
+        });
+        let pubKey = "-----BEGIN PUBLIC KEY-----\n"+getCookie("MyPubKey")+"\n-----END PUBLIC KEY-----";
+        console.log(pubKey);
+        let encrypted = crypt.encrypt(pubKey, message);
+        return encrypted;
+    }
+
+    </script>
+</body>
+</html>
+
+
